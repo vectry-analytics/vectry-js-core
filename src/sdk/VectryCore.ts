@@ -10,7 +10,7 @@ import {
 import { setRuntimeConfig } from '../config/runtimeConfig';
 import { defaultConfig } from '../config/defaultConfig';
 
-export class VectryClient {
+export class VectryCore {
   private transport: ITransport;
   public organizationId?: string;
 
