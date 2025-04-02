@@ -1,7 +1,6 @@
-import { IServiceArguments } from "../../interfaces";
-import { Trace } from "../../types";
-import { BaseService } from "../base/api.service";
-
+import { IServiceArguments } from '../../interfaces';
+import { Trace } from '../../types';
+import { BaseService } from '../base/api.service';
 
 export class TraceService extends BaseService {
   constructor({ transport }: IServiceArguments) {
@@ -9,7 +8,7 @@ export class TraceService extends BaseService {
       get: '/',
       create: '',
       update: '',
-      delete: '',
+      delete: ''
     });
   }
 

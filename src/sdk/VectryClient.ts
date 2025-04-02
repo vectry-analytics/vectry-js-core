@@ -7,6 +7,8 @@ import {
   EventService,
   TraceService
 } from '../services';
+import { setRuntimeConfig } from '../config/runtimeConfig';
+import { defaultConfig } from '../config/defaultConfig';
 
 export class VectryClient {
   private transport: ITransport;
@@ -18,9 +20,14 @@ export class VectryClient {
   public eventExplanation: EventExplanationService;
   public anomaly: AnomalyService;
 
-  constructor({ transport, organizationId }: IServiceArguments) {
-    this.transport = transport;
-    this.organizationId = organizationId;
+  constructor(args: IServiceArguments) {
+    this.transport = args.transport;
+    this.organizationId = args.organizationId;
+
+    setRuntimeConfig({
+        ...defaultConfig,
+        ...args,
+      });
 
     this.event = new EventService({ transport: this.transport });
     this.trace = new TraceService({ transport: this.transport });
