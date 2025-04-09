@@ -17,13 +17,13 @@ export interface IApiService {
 }
 
 export abstract class ApiService {
-  protected transport: ITransport | undefined;
-  protected baseUrl: string;
+  protected apiServiceConfig: VectryConfig;
+  protected endpointUrl: string;
   protected endpoints: EndpointMap;
 
   constructor(apiServiceParameters: IApiService) {
-    this.transport = apiServiceParameters.config.transport;
-    this.baseUrl = apiServiceParameters.baseUrl;
+    this.apiServiceConfig = apiServiceParameters.config;
+    this.endpointUrl = apiServiceParameters.baseUrl;
     this.endpoints = apiServiceParameters.endpoints;
   }
 
@@ -45,38 +45,38 @@ export abstract class ApiService {
     if (!data?.queryselector) throw new Error('Missing queryselector');
 
     const query = this.objectToQueryString(data);
-    const fullPath = `${this.baseUrl}${this.endpoints.get ?? ''}${data.queryselector}${query}`;
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.get ?? ''}${data.queryselector}${query}`;
 
-    return this.transport?.send(fullPath, {});
+    return this.apiServiceConfig?.transport?.send(fullPath, {});
   }
 
   async create(payload: any): Promise<any> {
-    const fullPath = `${this.baseUrl}${this.endpoints.create ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.create ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 
   async update(payload: any): Promise<any> {
-    const fullPath = `${this.baseUrl}${this.endpoints.update ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.update ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 
   async delete(payload: any): Promise<any> {
-    const fullPath = `${this.baseUrl}${this.endpoints.delete ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.delete ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 
   async post(payload: any, endpoint?: string): Promise<any> {
-    const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.post ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.post ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 
   async put(payload: any, endpoint?: string): Promise<any> {
-    const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.put ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.put ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 
   async patch(payload: any, endpoint?: string): Promise<any> {
-    const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.patch ?? ''}`;
-    return this.transport?.send(fullPath, payload);
+    const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.patch ?? ''}`;
+    return this.apiServiceConfig?.transport?.send(fullPath, payload);
   }
 }
