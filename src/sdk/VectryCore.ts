@@ -25,9 +25,9 @@ export class VectryCore {
     this.organizationId = args.organizationId;
 
     setRuntimeConfig({
-        ...defaultConfig,
-        ...args,
-      });
+      ...defaultConfig,
+      ...args
+    });
 
     this.event = new EventService({ transport: this.transport });
     this.trace = new TraceService({ transport: this.transport });
@@ -41,11 +41,10 @@ export class VectryCore {
    * Automatically enriches, validates, and dispatches the event.
    */
   async capture(event: any) {
-    const enriched = {
-      ...event,
-      organization_id: this.organizationId
-    };
+    if (!event) {
+      throw new Error('Event cannot be null or undefined');
+    }
 
-    return coreCapture(enriched);
+    return coreCapture(event);
   }
 }
