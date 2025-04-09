@@ -1,4 +1,4 @@
-import { IServiceArguments, ITransport } from '../interfaces';
+import { ITransport, VectryConfig } from '../interfaces';
 import { capture as coreCapture } from '../core/capture';
 import {
   AnomalyService,
@@ -11,7 +11,7 @@ import { setRuntimeConfig } from '../config/runtimeConfig';
 import { defaultConfig } from '../config/defaultConfig';
 
 export class VectryCore {
-  private transport: ITransport;
+  private transport: ITransport | undefined;
   public organizationId?: string;
 
   public event: EventService;
@@ -20,7 +20,7 @@ export class VectryCore {
   public eventExplanation: EventExplanationService;
   public anomaly: AnomalyService;
 
-  constructor(args: IServiceArguments) {
+  constructor(args: VectryConfig) {
     this.transport = args.transport;
     this.organizationId = args.organizationId;
 
@@ -29,11 +29,11 @@ export class VectryCore {
       ...args
     });
 
-    this.event = new EventService({ transport: this.transport });
-    this.trace = new TraceService({ transport: this.transport });
-    this.thread = new CausalThreadService({ transport: this.transport });
-    this.eventExplanation = new EventExplanationService({ transport: this.transport });
-    this.anomaly = new AnomalyService({ transport: this.transport });
+    this.event = new EventService({ transport: this.transport } as VectryConfig);
+    this.trace = new TraceService({ transport: this.transport } as VectryConfig);
+    this.thread = new CausalThreadService({ transport: this.transport } as VectryConfig);
+    this.eventExplanation = new EventExplanationService({ transport: this.transport } as VectryConfig);
+    this.anomaly = new AnomalyService({ transport: this.transport } as VectryConfig);
   }
 
   /**

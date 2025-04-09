@@ -1,15 +1,18 @@
-import { IServiceArguments } from "../../interfaces";
-import { Anomaly } from "../../types";
-import { BaseService } from "../base/api.service";
+import { VectryConfig } from '../../interfaces';
+import { Anomaly } from '../../types';
+import { ApiService } from '../base/api.service';
 
-
-export class AnomalyService extends BaseService {
-  constructor({ transport }: IServiceArguments) {
-    super(transport, '/causal/observation/event', {
-      get: '/',
-      create: '',
-      update: '',
-      delete: '',
+export class AnomalyService extends ApiService {
+  constructor(config: VectryConfig) {
+    super({
+      config,
+      baseUrl: '/causal/observation/event',
+      endpoints: {
+        get: '/',
+        create: '',
+        update: '',
+        delete: ''
+      }
     });
   }
 

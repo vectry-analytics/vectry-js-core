@@ -1,14 +1,18 @@
-import { IServiceArguments } from '../../interfaces';
+import { VectryConfig } from '../../interfaces';
 import { Trace } from '../../types';
-import { BaseService } from '../base/api.service';
+import { ApiService } from '../base/api.service';
 
-export class TraceService extends BaseService {
-  constructor({ transport }: IServiceArguments) {
-    super(transport, '/causal/observation/event', {
-      get: '/',
-      create: '',
-      update: '',
-      delete: ''
+export class TraceService extends ApiService {
+  constructor(config: VectryConfig) {
+    super({
+      config,
+      baseUrl: '/causal/observation/event',
+      endpoints: {
+        get: '/',
+        create: '',
+        update: '',
+        delete: ''
+      }
     });
   }
 

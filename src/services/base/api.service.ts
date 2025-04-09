@@ -1,5 +1,4 @@
-import { ITransport } from "../../interfaces";
-
+import { ITransport, VectryConfig } from '../../interfaces';
 
 export interface EndpointMap {
   get?: string;
@@ -11,15 +10,21 @@ export interface EndpointMap {
   [key: string]: string | undefined;
 }
 
-export abstract class BaseService {
-  protected transport: ITransport;
+export interface IApiService {
+  config: VectryConfig,
+  baseUrl: string, 
+  endpoints: EndpointMap
+}
+
+export abstract class ApiService {
+  protected transport: ITransport | undefined;
   protected baseUrl: string;
   protected endpoints: EndpointMap;
 
-  constructor(transport: ITransport, baseUrl: string, endpoints: EndpointMap) {
-    this.transport = transport;
-    this.baseUrl = baseUrl;
-    this.endpoints = endpoints;
+  constructor(apiServiceParameters: IApiService) {
+    this.transport = apiServiceParameters.config.transport;
+    this.baseUrl = apiServiceParameters.baseUrl;
+    this.endpoints = apiServiceParameters.endpoints;
   }
 
   protected objectToQueryString(obj: any): string {
@@ -42,36 +47,36 @@ export abstract class BaseService {
     const query = this.objectToQueryString(data);
     const fullPath = `${this.baseUrl}${this.endpoints.get ?? ''}${data.queryselector}${query}`;
 
-    return this.transport.send(fullPath, {});
+    return this.transport?.send(fullPath, {});
   }
 
   async create(payload: any): Promise<any> {
     const fullPath = `${this.baseUrl}${this.endpoints.create ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 
   async update(payload: any): Promise<any> {
     const fullPath = `${this.baseUrl}${this.endpoints.update ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 
   async delete(payload: any): Promise<any> {
     const fullPath = `${this.baseUrl}${this.endpoints.delete ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 
   async post(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.post ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 
   async put(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.put ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 
   async patch(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.baseUrl}${endpoint ?? this.endpoints.patch ?? ''}`;
-    return this.transport.send(fullPath, payload);
+    return this.transport?.send(fullPath, payload);
   }
 }

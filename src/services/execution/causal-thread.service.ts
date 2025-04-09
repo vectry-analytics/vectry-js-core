@@ -1,15 +1,18 @@
-import { IServiceArguments } from "../../interfaces";
-import { CausalThread } from "../../types";
-import { BaseService } from "../base/api.service";
+import { VectryConfig } from '../../interfaces';
+import { CausalThread } from '../../types';
+import { ApiService } from '../base/api.service';
 
-
-export class CausalThreadService extends BaseService {
-  constructor({ transport }: IServiceArguments) {
-    super(transport, '/causal/observation/event', {
-      get: '/',
-      create: '',
-      update: '',
-      delete: '',
+export class CausalThreadService extends ApiService {
+  constructor(config: VectryConfig) {
+    super({
+      config,
+      baseUrl: '/causal/observation/event',
+      endpoints: {
+        get: '/',
+        create: '',
+        update: '',
+        delete: ''
+      }
     });
   }
 
@@ -17,7 +20,10 @@ export class CausalThreadService extends BaseService {
    * Fetches events based on custom filtering parameters.
    * @param data An object containing the query selector and filters.
    */
-  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<CausalThread[]> {
+  async getByParameters(data: {
+    queryselector: string;
+    [key: string]: any;
+  }): Promise<CausalThread[]> {
     return super.getByParameters(data);
   }
 

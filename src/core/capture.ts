@@ -13,6 +13,6 @@ export async function capture(event: EventInput): Promise<void> {
   const enriched = enrichEvent(event);
   validateEvent(enriched);
 
-  const service = new EventService({ transport: config.transport });
+  const service = new EventService(config);
   await service.create(enriched);
 }
