@@ -7,20 +7,52 @@
  */
 export interface ITransport {
   /**
-   * Sends the payload to the specified backend path.
+   * Performs a GET request to the specified backend path.
    *
-   * @param path - The relative path or endpoint to which the data should be sent (e.g. 'causal/observation/event').
-   * @param payload - The data to be transmitted, typically a structured object like an Event or Trace.
+   * @param path - The endpoint to query.
+   * @param payload - Optional query parameters to include.
    *
-   * @returns A Promise that resolves once the payload has been successfully transmitted or rejects on error.
+   * @returns A Promise resolving with the fetched response.
    */
-  send: (path: string, payload: any) => Promise<void>;
+  get: <T = any>(path: string, payload?: any) => Promise<T>;
 
   /**
-   * Flushes any buffered data if the transport implementation supports batching.
-   * This method is optional and only applicable when internal queuing is used.
+   * Performs a POST request to the specified backend path.
    *
-   * @returns A Promise that resolves when all buffered data is sent, or immediately if unsupported.
+   * @param path - The endpoint to post to.
+   * @param payload - The data to send in the request body.
+   *
+   * @returns A Promise resolving with the server response.
    */
-  flush?: () => Promise<void>;
+  post: <T = any>(path: string, payload?: any) => Promise<T>;
+
+  /**
+   * Performs a PUT request to the specified backend path.
+   *
+   * @param path - The endpoint to update.
+   * @param payload - The data to update with.
+   *
+   * @returns A Promise resolving with the server response.
+   */
+  put: <T = any>(path: string, payload?: any) => Promise<T>;
+
+  /**
+   * Performs a PATCH request to the specified backend path.
+   *
+   * @param path - The endpoint to partially update.
+   * @param payload - The data to patch.
+   *
+   * @returns A Promise resolving with the server response.
+   */
+  patch: <T = any>(path: string, payload?: any) => Promise<T>;
+
+  /**
+   * Performs a DELETE request to the specified backend path.
+   *
+   * @param path - The endpoint to delete.
+   * @param payload - Optional data or query parameters.
+   *
+   * @returns A Promise resolving with the deletion result.
+   */
+  delete: <T = any>(path: string, payload?: any) => Promise<T>;
 }

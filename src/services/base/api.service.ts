@@ -1,4 +1,4 @@
-import { ITransport, VectryConfig } from '../../interfaces';
+import { VectryConfig } from '../../interfaces';
 
 export interface EndpointMap {
   get?: string;
@@ -47,36 +47,36 @@ export abstract class ApiService {
     const query = this.objectToQueryString(data);
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.get ?? ''}${data.queryselector}${query}`;
 
-    return this.apiServiceConfig?.transport?.send(fullPath, {});
+    return this.apiServiceConfig?.transport?.get(fullPath, {});
   }
 
   async create(payload: any): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.create ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.post(fullPath, payload);
   }
 
   async update(payload: any): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.update ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.patch(fullPath, payload);
   }
 
   async delete(payload: any): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.delete ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.delete(fullPath, payload);
   }
 
   async post(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.post ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.post(fullPath, payload);
   }
 
   async put(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.put ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.put(fullPath, payload);
   }
 
   async patch(payload: any, endpoint?: string): Promise<any> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.patch ?? ''}`;
-    return this.apiServiceConfig?.transport?.send(fullPath, payload);
+    return this.apiServiceConfig?.transport?.patch(fullPath, payload);
   }
 }
