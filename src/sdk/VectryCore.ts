@@ -9,6 +9,7 @@ import {
 } from '../services';
 import { setRuntimeConfig } from '../config/runtimeConfig';
 import { defaultConfig } from '../config/defaultConfig';
+import { detectMutation } from '../utils';
 
 export class VectryCore {
   private transport: ITransport | undefined;
@@ -47,4 +48,6 @@ export class VectryCore {
 
     return coreCapture(event);
   }
+
+  static detectMutation = detectMutation;
 }
