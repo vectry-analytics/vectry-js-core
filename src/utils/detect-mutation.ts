@@ -1,18 +1,17 @@
+export interface IMutationInput {
+  original: Record<string, any>;
+  updated: Record<string, any>;
+}
+
 /**
- * Compares two JavaScript objects and returns a structured diff representing
- * the fields that have changed between them. Useful for tracking mutations
- * over time in events, configurations, or state transitions.
+ * Compares two object snapshots and returns a structured mutation result.
+ * If no differences are found, returns null.
  *
- * If no changes are detected, returns null.
- *
- * @param original The original object state
- * @param updated The updated object state
- * @returns A structured object with original and updated diffs, or null if identical
+ * @param input Object containing `original` and `updated` states
+ * @returns A mutation object with only the fields that changed, or null
  */
-export function detectMutation(
-  original: Record<string, any>,
-  updated: Record<string, any>
-): { original: Record<string, any>; updated: Record<string, any> } | null {
+export function detectMutation(input: IMutationInput): IMutationInput | null {
+  const { original, updated } = input;
   const originalDiff: Record<string, any> = {};
   const updatedDiff: Record<string, any> = {};
 
@@ -20,7 +19,7 @@ export function detectMutation(
     const bothObjects = typeof a === 'object' && typeof b === 'object' && a !== null && b !== null;
 
     if (bothObjects && !Array.isArray(a) && !Array.isArray(b)) {
-      const nested = detectMutation(a, b);
+      const nested = detectMutation({ original: a, updated: b });
       if (nested) {
         originalDiff[key] = nested.original;
         updatedDiff[key] = nested.updated;
