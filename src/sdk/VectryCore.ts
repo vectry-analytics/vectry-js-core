@@ -13,6 +13,9 @@ import { detectMutation } from '../utils';
 
 export class VectryCore {
   private transport: ITransport | undefined;
+  
+  public detectMutation = detectMutation;
+
   public organizationId?: string;
 
   public event: EventService;
@@ -48,6 +51,4 @@ export class VectryCore {
 
     return coreCapture(event);
   }
-
-  static detectMutation = detectMutation;
 }
