@@ -1,13 +1,11 @@
-import { EventInput } from '../types';
+import { Event } from '../types';
 
-export function validateEvent(event: EventInput): void {
+export function validateEvent(event: Event): void {
   const requiredFields = [
     'organization_id',
-    'trace_id',
-    'system_domain',
-    'system_entity',
-    'system_entity_id',
-    'event_type'
+    'namespace',
+    'actor_id',
+    'actor_type'
   ];
 
   const missing = requiredFields.filter((field) => !(event as any)[field]);
