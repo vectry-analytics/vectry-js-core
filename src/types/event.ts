@@ -1,6 +1,6 @@
 import { BaseModel } from './base';
 
-export interface EventOperationType {
+export interface EventOperationSource {
   type: string;
   id: string;
   description: string;
@@ -16,7 +16,7 @@ export interface EventOperation {
   system_domain: string;
   system_entity: string;
   system_entity_id: string;
-  source?: EventOperationType;
+  source?: EventOperationSource;
   changes?: EventOperationChange;
 }
 
