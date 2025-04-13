@@ -16,3 +16,14 @@ export interface AuditInfo {
   user?: { id: any };
   timestamp?: string;
 }
+
+export interface BaseModel {
+  id: string;
+  created: AuditInfo;
+  modified?: AuditInfo;
+  deleted?: AuditInfo;
+  status: Status;
+  metadata?: Metadata;
+  context?: Context;
+  [key: string]: any;
+}
