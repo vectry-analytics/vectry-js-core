@@ -1,25 +1,29 @@
 export interface IMutationInput {
   original: Record<string, any>;
   updated: Record<string, any>;
+  ignoreProperties?: string[];
 }
 
 /**
  * Compares two object snapshots and returns a structured mutation result.
+ * Ignores any keys specified in `ignoreProperties`.
  * If no differences are found, returns null.
  *
- * @param input Object containing `original` and `updated` states
+ * @param input Object containing `original`, `updated` and optional `ignoreProperties`
  * @returns A mutation object with only the fields that changed, or null
  */
 export function detectMutation(input: IMutationInput): IMutationInput | null {
-  const { original, updated } = input;
+  const { original, updated, ignoreProperties = [] } = input;
   const originalDiff: Record<string, any> = {};
   const updatedDiff: Record<string, any> = {};
 
   function compare(key: string, a: any, b: any): boolean {
+    if (ignoreProperties.includes(key)) return false;
+
     const bothObjects = typeof a === 'object' && typeof b === 'object' && a !== null && b !== null;
 
     if (bothObjects && !Array.isArray(a) && !Array.isArray(b)) {
-      const nested = detectMutation({ original: a, updated: b });
+      const nested = detectMutation({ original: a, updated: b, ignoreProperties });
       if (nested) {
         originalDiff[key] = nested.original;
         updatedDiff[key] = nested.updated;
