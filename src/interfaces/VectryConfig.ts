@@ -3,7 +3,7 @@ import { IContextProvider, IEnricher, ITransport } from '.';
 export interface VectryConfig {
   organizationId: string;
   baseUrl?: string;
-  environment?: 'dev' | 'staging' | 'prod';
+  vectryEnvironment?: 'local' | 'development' | 'production';
   contextProvider?: () => Promise<IContextProvider>;
   transport?: ITransport;
   enrichers?: IEnricher[];
