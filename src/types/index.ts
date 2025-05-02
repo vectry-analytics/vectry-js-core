@@ -4,3 +4,4 @@ export * from './trace';
 export * from './causal-thread';
 export * from './event-explanation';
 export * from './anomaly';
+export * from './response';

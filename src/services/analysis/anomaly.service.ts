@@ -1,5 +1,5 @@
 import { VectryConfig } from '../../interfaces';
-import { Anomaly } from '../../types';
+import { Anomaly, Response } from '../../types';
 import { ApiService } from '../base/api.service';
 
 export class AnomalyService extends ApiService {
@@ -20,7 +20,7 @@ export class AnomalyService extends ApiService {
    * Fetches events based on custom filtering parameters.
    * @param data An object containing the query selector and filters.
    */
-  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<Anomaly[]> {
+  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<Response | undefined> {
     return super.getByParameters(data);
   }
 
@@ -28,7 +28,7 @@ export class AnomalyService extends ApiService {
    * Sends a new event to the backend.
    * @param payload Anomaly data to be created.
    */
-  async create(payload: Partial<Anomaly>): Promise<Anomaly> {
+  async create(payload: Partial<Anomaly>): Promise<Response | undefined> {
     return super.create(payload);
   }
 
@@ -36,7 +36,7 @@ export class AnomalyService extends ApiService {
    * Updates an existing event.
    * @param payload Anomaly data to be updated.
    */
-  async update(payload: Partial<Anomaly>): Promise<Anomaly> {
+  async update(payload: Partial<Anomaly>): Promise<Response | undefined> {
     return super.update(payload);
   }
 
@@ -44,7 +44,7 @@ export class AnomalyService extends ApiService {
    * Deletes an event.
    * @param payload Identifier or full object of the event to delete.
    */
-  async delete(payload: Partial<Anomaly>): Promise<any> {
+  async delete(payload: Partial<Anomaly>): Promise<Response | undefined> {
     return super.delete(payload);
   }
 }

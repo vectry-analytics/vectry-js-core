@@ -1,5 +1,5 @@
 import { VectryConfig } from '../../interfaces';
-import { CausalThread } from '../../types';
+import { CausalThread, Response } from '../../types';
 import { ApiService } from '../base/api.service';
 
 export class CausalThreadService extends ApiService {
@@ -23,7 +23,7 @@ export class CausalThreadService extends ApiService {
   async getByParameters(data: {
     queryselector: string;
     [key: string]: any;
-  }): Promise<CausalThread[]> {
+  }): Promise<Response | undefined> {
     return super.getByParameters(data);
   }
 
@@ -31,7 +31,7 @@ export class CausalThreadService extends ApiService {
    * Sends a new event to the backend.
    * @param payload CausalThread data to be created.
    */
-  async create(payload: Partial<CausalThread>): Promise<CausalThread> {
+  async create(payload: Partial<CausalThread>): Promise<Response | undefined> {
     return super.create(payload);
   }
 
@@ -39,7 +39,7 @@ export class CausalThreadService extends ApiService {
    * Updates an existing event.
    * @param payload CausalThread data to be updated.
    */
-  async update(payload: Partial<CausalThread>): Promise<CausalThread> {
+  async update(payload: Partial<CausalThread>): Promise<Response | undefined> {
     return super.update(payload);
   }
 
@@ -47,7 +47,7 @@ export class CausalThreadService extends ApiService {
    * Deletes an event.
    * @param payload Identifier or full object of the event to delete.
    */
-  async delete(payload: Partial<CausalThread>): Promise<any> {
+  async delete(payload: Partial<CausalThread>): Promise<Response | undefined> {
     return super.delete(payload);
   }
 }

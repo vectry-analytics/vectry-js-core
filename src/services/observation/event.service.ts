@@ -1,5 +1,5 @@
 import { VectryConfig } from '../../interfaces';
-import { Event } from '../../types';
+import { Event, Response } from '../../types';
 import { ApiService } from '../base/api.service';
 
 export class EventService extends ApiService {
@@ -20,7 +20,7 @@ export class EventService extends ApiService {
    * Fetches events based on custom filtering parameters.
    * @param data An object containing the query selector and filters.
    */
-  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<Event[]> {
+  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<Response | undefined> {
     return super.getByParameters(data);
   }
 
@@ -28,7 +28,7 @@ export class EventService extends ApiService {
    * Sends a new event to the backend.
    * @param payload Event data to be created.
    */
-  async create(payload: Partial<Event>): Promise<Event> {
+  async create(payload: Partial<Event>): Promise<Response | undefined> {
     return super.create(payload);
   }
 
@@ -36,7 +36,7 @@ export class EventService extends ApiService {
    * Updates an existing event.
    * @param payload Event data to be updated.
    */
-  async update(payload: Partial<Event>): Promise<Event> {
+  async update(payload: Partial<Event>): Promise<Response | undefined> {
     return super.update(payload);
   }
 
@@ -44,7 +44,7 @@ export class EventService extends ApiService {
    * Deletes an event.
    * @param payload Identifier or full object of the event to delete.
    */
-  async delete(payload: Partial<Event>): Promise<any> {
+  async delete(payload: Partial<Event>): Promise<Response | undefined> {
     return super.delete(payload);
   }
 }

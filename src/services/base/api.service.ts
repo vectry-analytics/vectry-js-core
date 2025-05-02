@@ -1,4 +1,5 @@
 import { VectryConfig } from '../../interfaces';
+import { Response } from '../../types/response';
 
 export interface EndpointMap {
   get?: string;
@@ -41,7 +42,7 @@ export abstract class ApiService {
     return query ? `?${query}` : '';
   }
 
-  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<any> {
+  async getByParameters(data: { queryselector: string; [key: string]: any }): Promise<Response | undefined> {
     if (!data?.queryselector) throw new Error('Missing queryselector');
 
     const query = this.objectToQueryString(data);
@@ -50,32 +51,32 @@ export abstract class ApiService {
     return this.apiServiceConfig?.transport?.get(fullPath, {});
   }
 
-  async create(payload: any): Promise<any> {
+  async create(payload: any): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.create ?? ''}`;
     return this.apiServiceConfig?.transport?.post(fullPath, payload);
   }
 
-  async update(payload: any): Promise<any> {
+  async update(payload: any): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.update ?? ''}`;
     return this.apiServiceConfig?.transport?.patch(fullPath, payload);
   }
 
-  async delete(payload: any): Promise<any> {
+  async delete(payload: any): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${this.endpoints.delete ?? ''}`;
     return this.apiServiceConfig?.transport?.delete(fullPath, payload);
   }
 
-  async post(payload: any, endpoint?: string): Promise<any> {
+  async post(payload: any, endpoint?: string): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.post ?? ''}`;
     return this.apiServiceConfig?.transport?.post(fullPath, payload);
   }
 
-  async put(payload: any, endpoint?: string): Promise<any> {
+  async put(payload: any, endpoint?: string): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.put ?? ''}`;
     return this.apiServiceConfig?.transport?.put(fullPath, payload);
   }
 
-  async patch(payload: any, endpoint?: string): Promise<any> {
+  async patch(payload: any, endpoint?: string): Promise<Response | undefined> {
     const fullPath = `${this.apiServiceConfig.baseUrl}${this.endpointUrl}${endpoint ?? this.endpoints.patch ?? ''}`;
     return this.apiServiceConfig?.transport?.patch(fullPath, payload);
   }
